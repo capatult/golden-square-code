@@ -253,19 +253,48 @@ def test_requesting_reading_chunk_encompassing_all_contents_always_returns_all_c
         for chunk in chunks
     )
 
-# """
-# When we repeatedly request a reading chunk
-# It returns the next unread chunk of the appropriate size each time
-# It also restarts from the beginning once requested chunks have covered all of contents
-# """
-# def test_repeated_reading_chunk_requests_return_successive_chunks_with_correct_restarts():
-#     contents = "This is a longer diary entry containing a total of twelve words."
-#     diary_entry = DiaryEntry
+"""
+When we repeatedly request a reading chunk
+It returns the next unread chunk of the appropriate size each time
+It also restarts from the beginning once requested chunks have covered all of contents
+"""
+def test_repeated_reading_chunk_requests_return_successive_chunks_with_correct_restarts():
+    contents = "This is a longer diary entry containing a total of twelve words."
+    diary_entry = DiaryEntry("", contents)
+    chunks = []
+    for __ in range(4):
+        chunks.append(diary_entry.reading_chunk(5, 1))
+    assert chunks == [
+        "This is a longer diary",
+        "entry containing a total of",
+        "twelve words.",
+        "This is a longer diary"
+    ]
 
-# """
-# When we repeatedly request a reading chunk
-# And request a chunk which returns to the end of contents but overlap
-# It still restarts correctly on the next chunk request instead of returning an empty string
-# """
-# def test_repeated_reading_chunk_requests_restart_correctly_and_do_not_return_empty_chunk():
-#     assert False
+"""
+When we repeatedly request a reading chunk
+And request a chunk which returns to the end of contents but overlap
+It still restarts correctly on the next chunk request instead of returning an empty string
+"""
+def test_repeated_reading_chunk_requests_restart_correctly_and_do_not_return_empty_chunk():
+    contents = "This is a six word entry."
+    diary_entry = DiaryEntry("", contents)
+    chunks = []
+    for __ in range(3):
+        chunks.append(diary_entry.reading_chunk(1, 3))
+    assert chunks == [
+        "This is a",
+        "six word entry.",
+        "This is a",
+    ]
+
+"""
+When we request a reading chunk
+The whitespace characters and sequences of whitespace characters are replaced with a single space
+It returns this modified form of the chunk
+"""
+def test_whitespace_character_sequences_in_contents_replaced_by_single_spaces_in_chunks():
+    special_contents = "One Two  Three\nFour\t\t\tFive \n \tSix  "
+    diary_entry = DiaryEntry("", special_contents)
+    chunk = diary_entry.reading_chunk(2, 3)
+    assert chunk == "One Two Three Four Five Six"

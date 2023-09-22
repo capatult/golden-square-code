@@ -11,6 +11,8 @@ class DiaryEntry:
             raise TypeError("`contents` argument was not a string.")
         self._title = title
         self._contents = contents
+        self._words_of_contents = self._contents.split()
+        self._reading_progress = 0
 
     def format(self):
         # Returns:
@@ -58,5 +60,12 @@ class DiaryEntry:
             raise Exception("`minutes` argument was not a non-negative integer.")
         if minutes == 0:
             return ""
-        else:
-            return self._contents
+        desired_words_in_chunk = wpm * minutes
+        words_in_chunk = self._words_of_contents[
+            self._reading_progress
+            : self._reading_progress + desired_words_in_chunk
+        ]
+        self._reading_progress += desired_words_in_chunk
+        if self._reading_progress >= len(self._words_of_contents):
+            self._reading_progress = 0
+        return " ".join(words_in_chunk)
