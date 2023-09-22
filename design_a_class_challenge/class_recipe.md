@@ -11,7 +11,10 @@
 ```python
 class MusicJournal:
     # User-facing properties:
-    #   (none)
+    #   Constants:
+    #     `NON_STRING_TRACK_NAME_EXCEPTION_MSG`
+    #     `ZERO_TRACK_NAMES_STORED_INFORMATIVE_MESSAGE`, string
+    #     `DEFAULT_LISTING_HEADER_MESSAGE`, string
 
     def __init__(self):
         # Side effects:
@@ -38,6 +41,14 @@ class MusicJournal:
 ## 3. Examples for testing
 
 ```python
+
+"""
+When the music journal module is imported
+The music journal class constants have their correct values
+"""
+MusicJournal.NON_STRING_TRACK_NAME_EXCEPTION_MSG  # => correct value
+MusicJournal.ZERO_TRACK_NAMES_STORED_INFORMATIVE_MESSAGE  # => correct value
+MusicJournal.DEFAULT_LISTING_HEADER_MESSAGE  # => correct value
 
 """
 When a new music journal instance is created
@@ -102,20 +113,20 @@ journal.add_track(None)  # raises an exception
 
 """
 If no tracks have been added yet
-When we get a list of tracks
+When we get a listing of tracks
 It returns a message informing us no tracks have been listened to
 """
 journal = MusicJournal()
-journal.get_list_of_tracks()  # => string containing an informative message
+journal.get_listing_of_tracks()  # => string containing an informative message
 
 """
 If one track has been added
-When we get a list of tracks
+When we get a listing of tracks
 It returns a correctly formatted listing containing just that track
 """
 journal = MusicJournal()
 journal.add_track("First!")
-journal.get_list_of_tracks()   # => "You've listened to these tracks:\n  * First!"
+journal.get_listing_of_tracks()   # => "You've listened to these tracks:\n  * First!"
 
 """
 If two different tracks have been added
@@ -125,7 +136,7 @@ It returns a correctly formatted listing containing just those tracks, in either
 journal = MusicJournal()
 journal.add_track("Hello")
 journal.add_track("World")
-journal.get_list_of_tracks()  # => correctly formatted listing in either order
+journal.get_listing_of_tracks()  # => correctly formatted listing in either order
 
 """
 If multiple tracks have been added
@@ -138,7 +149,7 @@ track_names = [
 ]
 for track_name in track_names:
     journal.add_track(track_name)
-lines = journal.get_list_of_tracks().split("\n")
+lines = journal.get_listing_of_tracks().split("\n")
 lines[0]  # => "You've listened to these tracks:"
 set(lines[1:])  # => set("  * " + track_name for track_name in track_names)
 
