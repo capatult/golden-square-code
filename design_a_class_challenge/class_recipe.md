@@ -12,7 +12,7 @@
 class MusicJournal:
     # User-facing properties:
     #   Constants:
-    #     `NON_STRING_TRACK_NAME_EXCEPTION_MSG`
+    #     `NON_STRING_TRACK_NAME_EXCEPTION_MESSAGE`, string
     #     `ZERO_TRACK_NAMES_STORED_INFORMATIVE_MESSAGE`, string
     #     `DEFAULT_LISTING_HEADER_MESSAGE`, string
 
@@ -46,7 +46,7 @@ class MusicJournal:
 When the music journal module is imported
 The music journal class constants have their correct values
 """
-MusicJournal.NON_STRING_TRACK_NAME_EXCEPTION_MSG  # => correct value
+MusicJournal.NON_STRING_TRACK_NAME_EXCEPTION_MESSAGE  # => correct value
 MusicJournal.ZERO_TRACK_NAMES_STORED_INFORMATIVE_MESSAGE  # => correct value
 MusicJournal.DEFAULT_LISTING_HEADER_MESSAGE  # => correct value
 
