@@ -12,10 +12,6 @@ class MusicJournal:
         self._tracks_listened_to.add(track_name)
 
     def get_listing_of_tracks(self):
-        # Returns:
-        #   string: a nicely formatted list of tracks the user has listened to,
-        #           in no particular order
-        #           OR a message informing the user no tracks have been added
         if len(self._tracks_listened_to) == 0:
             return self.ZERO_TRACK_NAMES_STORED_INFORMATIVE_MESSAGE
         unformatted_lines = [self.DEFAULT_LISTING_HEADER_MESSAGE]
